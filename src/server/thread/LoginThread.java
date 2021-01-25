@@ -46,9 +46,16 @@ public class LoginThread extends Thread {
                         os.flush();
                     }
                 } else if ("registered".equals(dates[0])) {
-                    if (dao.add(dates[1], dates[2]))
+                    if (dao.add(dates[1], dates[2])){
                         os.println("success");
-                    else os.println("fail");
+                        System.out.println("registered" + ":success");
+                    }
+
+                    else {
+                        os.println("fail");
+                        System.out.println("registered" + ":fail");
+                    }
+                    os.flush();
                     socket.close();
                 }
 

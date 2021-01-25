@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import lombok.SneakyThrows;
 import utils.MD5Utils;
 
 import java.io.BufferedReader;
@@ -56,7 +55,7 @@ public class LoginController implements Initializable {
             /*
             初始化连接，建立输入输出流
              */
-            Socket socket = new Socket("localhost",6666);
+            Socket socket = new Socket("localhost",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /*
@@ -102,7 +101,7 @@ public class LoginController implements Initializable {
             /*
             初始化连接，建立输入输出流
              */
-            Socket socket = new Socket("localhost",6666);
+            Socket socket = new Socket("localhost",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /*

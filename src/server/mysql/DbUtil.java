@@ -14,6 +14,7 @@ public class DbUtil {
         try {
             //1.加载驱动程序
             Class.forName("com.mysql.cj.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");ky的版本
             //2. 获得数据库连接
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
