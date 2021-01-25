@@ -2,7 +2,10 @@ package client;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -80,8 +83,13 @@ public class LoginController implements Initializable {
             }
             else {
                 System.out.println("登录成功！");
+                Parent root = FXMLLoader.load(getClass().getResource("chat.fxml"));
+                LoginMain.stage.setTitle("Chat");
+                LoginMain.stage.setScene(new Scene(root, 750, 550));
+                ClientThread thread = new ClientThread(socket,reader,writer);
+                thread.start();
                 /*
-                接下来加载聊天界面
+                接下来加载聊天界面，并创建服务类
                  */
             }
 

@@ -7,16 +7,17 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Main {
+public class ServerMain {
     static boolean END = false;
     private static UserQueue users = UserQueue.getUsers();
 
     public static void main(String[] args) {
         try {
+            System.out.println("服务器已启动···等待连接");
             ServerSocket serverSocket = new ServerSocket(8010);
             Socket socket;
 
-            while (!Main.END) {
+            while (!ServerMain.END) {
                 if ((socket = serverSocket.accept()) != null)
                     new LoginThread(socket).start();
             }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ChatController">
+  <items>
+      <VBox fx:id="members" prefHeight="200.0" prefWidth="100.0" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="303.0" prefWidth="584.0">
+                     <children>
+                        <HBox prefHeight="63.0" prefWidth="580.0">
+                           <children>
+                              <ImageView fitHeight="64.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label prefHeight="78.0" prefWidth="127.0" text="Hello" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="131.0" prefWidth="405.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea layoutY="-2.0" prefHeight="158.0" prefWidth="584.0" />
+                  <Button layoutX="492.0" layoutY="103.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+  </items>
+</SplitPane>
