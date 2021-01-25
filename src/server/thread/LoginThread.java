@@ -32,12 +32,12 @@ public class LoginThread extends Thread {
             try {
                 if ("login".equals(dates[0])) {
                     //从数据库核对账号密码
-                    //成功 -》 创建用户对象返回成功,更新所有用户界面
+                    //成功 -> 创建用户对象返回成功,更新所有用户界面
                     if (dao.get(dates[1], dates[2])) {
                         user = new User(socket, dates[1]);
-                        if (users.getQueue().size() > 0) {
+                        if (users.getQueue().size() > 0) {//已经有人上线了
                             user.send(users.sendOnLine(dates[1]));
-                        } else user.send("success,online" + "\n"); //当其是第一个上线，随便改
+                        } else user.send("success," + "\n"); //当其是第一个上线，随便改
                         users.addUser(user);
                         addListener(user);//监听
                     } else {
@@ -45,11 +45,11 @@ public class LoginThread extends Thread {
                         os.println("fail");
                         os.flush();
                     }
-                } else if ("register".equals(dates[0])) {
+                } else if ("registered".equals(dates[0])) {
                     if (dao.add(dates[1], dates[2]))
                         os.println("success");
                     else os.println("fail");
-                    os.flush();
+                    socket.close();
                 }
 
             } catch (SQLException e) {
@@ -65,6 +65,13 @@ public class LoginThread extends Thread {
         try {
             while (flag) {
                 String data = user.receive();
+                /*
+                可能的情况有
+                ①离线结束 收到E
+                ②发送信息 S
+                    ①大厅 S,ALL
+                    ②私聊 S,
+                 */
                 String[] dates = data.split(",");
                 if ("E".equals(dates[0])) {//结束判断
                     users.sendOffLine(user);

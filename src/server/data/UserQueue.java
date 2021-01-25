@@ -39,13 +39,16 @@ public class UserQueue {
         return null;
     }
 
+    /*
+    给所有已经在线的用户更新在线信息
+     */
     public synchronized String sendOnLine(String name) {
         StringBuilder sb = new StringBuilder("success,online");
         for (User u : queue) {
-            sb.append(",").append(u.getUserName());
-            u.send("L:" + name);
+            sb.append(",").append(u.getUserName());//构造已经上线的用户的串
+            u.send("L:" + name);//给已经上线的用户传递新上线用户的信息
         }
-        return sb.toString() + "\n";
+        return sb.toString();
     }
 
     public synchronized void sendOffLine(User user) {
@@ -65,6 +68,9 @@ public class UserQueue {
             for (User u : queue) {
                 //通知UI界面更新
                 if (rName.equals(u.getUserName())) {
+                    /*
+                    sName--信息来源
+                     */
                     u.send("send," + sName + "," + data);
                     break;
                 }
