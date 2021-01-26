@@ -64,6 +64,7 @@ public class LoginController implements Initializable {
             /*
             发送登录信息 格式为 login,username,password
              */
+            String fName = userName.getText();
             writer.println("login,"+userName.getText()+","+ MD5Utils.md5(password.getText()));
             writer.flush();
             /*
@@ -86,7 +87,11 @@ public class LoginController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("chat.fxml"));
                 LoginMain.stage.setTitle("Chat");
                 LoginMain.stage.setScene(new Scene(root, 750, 550));
-                ClientThread thread = new ClientThread(socket,reader,writer);
+                /**
+                 改变
+                 */
+//                ClientThread thread = new ClientThread(socket,reader,writer);
+                ClientThread thread = new ClientThread(socket,reader,writer,new Member(fName));
                 thread.start();
                 /*
                 接下来加载聊天界面，并创建服务类

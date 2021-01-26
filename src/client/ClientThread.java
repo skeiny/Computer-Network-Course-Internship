@@ -13,17 +13,28 @@ import java.util.ArrayList;
 public class ClientThread extends Thread{
 
     //在线成员
-    private static final ArrayList<String> members = new ArrayList<>();
+    public static final ArrayList<Member> members = new ArrayList<>();
 
     //连接
     private static Socket socket;
     private static BufferedReader reader;
     private static PrintWriter writer;
+    private static Member member;//改变
 
     public ClientThread(Socket socket,BufferedReader reader,PrintWriter writer){
         ClientThread.socket = socket;
         ClientThread.reader = reader;
         ClientThread.writer = writer;
+    }
+
+    /*
+    改变
+     */
+    public ClientThread(Socket socket,BufferedReader reader,PrintWriter writer,Member member){
+        ClientThread.socket = socket;
+        ClientThread.reader = reader;
+        ClientThread.writer = writer;
+        ClientThread.member = member;
     }
 
     @Override
@@ -37,13 +48,39 @@ public class ClientThread extends Thread{
                 receiveMessage = reader.readLine();//有消息过来了
 
                 if(receiveMessage.contains("首次初始化")){
-                    //初始化
+                    //初始化+1
+                    String[] userNames = receiveMessage.split(",");
+                    for (String name : userNames) {
+                        members.add(new Member(name));
+                    }
+                    ChatController.update.setValue(ChatController.update.getValue() + 1);
                 }else if (receiveMessage.contains("用户上线")){
-                    //用户上线功能
+                    //用户上线功能+2
+                    String name = receiveMessage;//从中截取name
+                    members.add(new Member(name));
+                    ChatController.update.setValue(ChatController.update.getValue() + 2);
                 }else if(receiveMessage.contains("用户下线")){
-                    //下线
+                    //下线-2
+                    String name = receiveMessage;//从中截取name
+                    for (Member member : members) {
+                        if (member.getName().equals(name)) {
+                            members.remove(member);
+                            break;
+                        }
+                    }
+                    ChatController.update.setValue(ChatController.update.getValue() - 2);
                 }else if (receiveMessage.contains("收到消息")){
-                    //收到消息更新界面
+                    //收到消息更新界面-1
+                    String name = receiveMessage;//从中截取name
+                    String data = receiveMessage;//从中截取data
+                    for (Member member : members) {
+                        if (member.getName().equals(name)) {
+                            member.setMiss(true);
+                            break;
+                        }
+                    }
+                    member.getChatRecord().add("1," + data);
+                    ChatController.update.setValue(ChatController.update.getValue() - 1);
                 }
 
             }
