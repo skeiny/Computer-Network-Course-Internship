@@ -61,7 +61,7 @@ public class User {
     public void send(String data) {
         ps.println(data);
         ps.flush();
-        System.out.println("给"+userName+"发:"+data);
+        System.out.println("服务器给"+userName+"发送了:"+data);
     }
 
     public String receive() throws IOException {

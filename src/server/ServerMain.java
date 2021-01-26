@@ -1,7 +1,7 @@
 package server;
 
 import server.data.UserQueue;
-import server.thread.LoginThread;
+import server.thread.ServerThread;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -19,7 +19,7 @@ public class ServerMain {
 
             while (!ServerMain.END) {
                 if ((socket = serverSocket.accept()) != null)
-                    new LoginThread(socket).start();
+                    new ServerThread(socket).start();
             }
 
         } catch (IOException e) {

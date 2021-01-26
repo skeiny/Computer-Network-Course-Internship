@@ -61,23 +61,19 @@ public class LoginController implements Initializable {
             Socket socket = new Socket("localhost",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            LoginMain.socket = socket;
+            LoginMain.writer = writer;
             /*
             发送登录信息 格式为 login,username,password
              */
-            String fName = userName.getText();
             writer.println("login,"+userName.getText()+","+ MD5Utils.md5(password.getText()));
             writer.flush();
             /*
             等待返回的结果
              */
             String loginResult = reader.readLine();
-            if(loginResult.equals("fail")){
+            if(loginResult.equals("loginFail")){
                 System.out.println("登录失败！");
-                writer.println("end");
-                /*
-                关闭连接
-                 */
-                writer.flush();
                 writer.close();
                 reader.close();
                 socket.close();
@@ -90,8 +86,7 @@ public class LoginController implements Initializable {
                 /**
                  改变
                  */
-//                ClientThread thread = new ClientThread(socket,reader,writer);
-                ClientThread thread = new ClientThread(socket,reader,writer,new Member(fName));
+                ClientThread thread = new ClientThread(socket,reader,writer,userName.getText());
                 thread.start();
                 /*
                 接下来加载聊天界面，并创建服务类

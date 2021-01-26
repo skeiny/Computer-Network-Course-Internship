@@ -42,24 +42,21 @@ public class UserQueue {
     /*
     给所有已经在线的用户更新在线信息
      */
-    public synchronized String sendOnLine(String name) {
-        StringBuilder sb = new StringBuilder("success,online");
+    public synchronized String sendOnLine(String newUserName) {
+        if (queue.size()<=0) return "currentOnline,";
+        StringBuilder currentOnline = new StringBuilder("currentOnline");
         for (User u : queue) {
-            sb.append(",").append(u.getUserName());//构造已经上线的用户的串
-            u.send("L:" + name);//给已经上线的用户传递新上线用户的信息
+            u.send("newUserOnline," + newUserName);//给已经上线的用户传递新上线用户的信息
+            currentOnline.append(",").append(u.getUserName());//构造已经上线的用户的串
         }
-        return sb.toString();
+        return currentOnline.toString();
     }
 
     public synchronized void sendOffLine(User user) {
         Iterator<User> iterator = queue.iterator();
         while (iterator.hasNext()) {
             User u = iterator.next();
-            if (!user.equals(u)) {
-                u.send("E:" + user.getUserName());
-            } else {
-                iterator.remove();
-            }
+            u.send("offline," + user.getUserName());
         }
     }
 
@@ -71,14 +68,15 @@ public class UserQueue {
                     /*
                     sName--信息来源
                      */
-                    u.send("send," + sName + "," + data);
+                    u.send("chat," + sName + "," + data);
+                    System.out.println("服务器给"+u.getUserName()+"发送了:"+"chat," + sName + "," + data);
                     break;
                 }
             }
         } else if (type == 1) {//群发
             for (User u : queue) {
                 //通知UI界面更新
-                u.send("send," + sName + "," + data);
+                u.send("allChat," + sName + "," + data);
             }
         }
     }
