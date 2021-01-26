@@ -76,7 +76,9 @@ public class UserQueue {
         } else if (type == 1) {//群发
             for (User u : queue) {
                 //通知UI界面更新
-                u.send("allChat," + sName + "," + data);
+                if (!u.getUserName().equals(sName)){
+                    u.send("allChat," + sName + "," + data);
+                }
             }
         }
     }

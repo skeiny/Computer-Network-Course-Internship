@@ -15,6 +15,9 @@ public class ClientThread extends Thread{
     //在线成员
     public static final ArrayList<Member> members = new ArrayList<>();
 
+    static {
+        members.add(new Member("聊天大厅"));
+    }
     //连接
     public static Socket socket;
     public static BufferedReader reader;
@@ -46,7 +49,10 @@ public class ClientThread extends Thread{
             String receiveMessage;
             while (true){
                 receiveMessage = reader.readLine();//有消息过来了
-
+                if (receiveMessage == null){
+                    reader.close();
+                    break;
+                }
                 if(receiveMessage.contains("currentOnline")){
                     //初始化+1
                     String[] userNames = receiveMessage.split(",");
@@ -72,12 +78,14 @@ public class ClientThread extends Thread{
                         }
                     }
                     ChatController.update.setValue(ChatController.update.getValue() - 2);
-                }else if (receiveMessage.contains("chat")){
+                }else if (receiveMessage.contains("chat") || receiveMessage.contains("allChat")){
                     //收到消息更新界面-1
                     String name = receiveMessage.split(",")[1];//从中截取name
                     String data = receiveMessage.split(",")[2];//从中截取data
+
+                    String finalName = receiveMessage.contains("allChat") ? "聊天大厅" : name;
                     for (Member member : members) {
-                        if (member.getName().getText().equals(name)) {
+                        if (member.getName().getText().equals(finalName)) {
                             member.setStyle("-fx-background-color: green");
                             member.getChatRecord().add(name+ "," + data);
                             members.remove(member);
@@ -87,7 +95,6 @@ public class ClientThread extends Thread{
                     }
                     ChatController.update.setValue(ChatController.update.getValue() - 1);
                 }
-
             }
         }catch (Exception e){
             e.printStackTrace();

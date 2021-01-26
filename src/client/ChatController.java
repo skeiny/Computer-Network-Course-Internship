@@ -102,8 +102,12 @@ public class ChatController implements Initializable {
 
     @FXML
     private void send(){
-        ClientThread.send2Server("chat,"+ member.getName().getText() + "," + sendBox.getText());
-        member.getChatRecord().add(member.getName().getText() +","+sendBox.getText());
+        String rName = member.getName().getText();
+        if (rName.equals("聊天大厅")){
+            rName = "all";
+        }
+        ClientThread.send2Server("chat,"+ rName + "," + sendBox.getText());
+        member.getChatRecord().add(ClientThread.myName +","+sendBox.getText());
         Platform.runLater(()->chatUpdate());
         sendBox.setText("");
     }

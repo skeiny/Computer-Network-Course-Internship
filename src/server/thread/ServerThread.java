@@ -68,16 +68,18 @@ public class ServerThread extends Thread {
                 else if ("registered".equals(dates[0])) {
                     if (!dates[1].equals("all") && dao.add(dates[1], dates[2])){
                         os.println("success");
+                        os.flush();
                         System.out.println("registered" + ":success");
                     } else {
                         os.println("fail");
+                        os.flush();
                         System.out.println("registered" + ":fail");
                     }
-                    os.flush();
+                    Thread.sleep(500);
                     socket.close();
                 }
 
-            } catch (SQLException e) {
+            } catch (SQLException | InterruptedException e) {
                 e.printStackTrace();
             }
         } catch (IOException e) {
@@ -95,7 +97,7 @@ public class ServerThread extends Thread {
                 /*
                 下线,切断socket,通知所有用户这个人离线了
                 */
-                if (data.equals("offline")){
+                if (data.contains("offline")){
                     socket.close();
                     users.getQueue().remove(user);//先移出去
                     users.sendOffLine(user);//给所有用户发送该用户的离线信息

@@ -1,6 +1,5 @@
 package client;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +12,6 @@ import utils.MD5Utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
@@ -61,8 +59,9 @@ public class LoginController implements Initializable {
             Socket socket = new Socket("localhost",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            LoginMain.socket = socket;
-            LoginMain.writer = writer;
+            ClientMain.socket = socket;
+            ClientMain.writer = writer;
+            ClientMain.reader = reader;
             /*
             发送登录信息 格式为 login,username,password
              */
@@ -81,8 +80,8 @@ public class LoginController implements Initializable {
             else {
                 System.out.println("登录成功！");
                 Parent root = FXMLLoader.load(getClass().getResource("chat.fxml"));
-                LoginMain.stage.setTitle("Chat");
-                LoginMain.stage.setScene(new Scene(root, 750, 550));
+                ClientMain.stage.setTitle("Chat");
+                ClientMain.stage.setScene(new Scene(root, 750, 550));
                 /**
                  改变
                  */

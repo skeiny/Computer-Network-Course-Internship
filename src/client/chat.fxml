@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ChatController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ChatController">
   <items>
       <VBox fx:id="members" prefHeight="200.0" prefWidth="100.0" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -22,7 +18,7 @@
             <AnchorPane prefHeight="131.0" prefWidth="405.0" BorderPane.alignment="CENTER">
                <children>
                   <TextArea fx:id="sendBox" layoutY="-2.0" prefHeight="158.0" prefWidth="584.0" />
-                  <Button fx:id="send" layoutX="492.0" layoutY="103.0" mnemonicParsing="false" onAction="#send" text="Button" />
+                  <Button fx:id="send" layoutX="492.0" layoutY="103.0" mnemonicParsing="false" onAction="#send" text="发送" />
                </children>
             </AnchorPane>
          </bottom>
