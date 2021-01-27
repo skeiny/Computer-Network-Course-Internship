@@ -66,7 +66,7 @@ public class ClientThread extends Thread{
                 }else if (receiveMessage.contains("newUserOnline")){
                     //用户上线功能+2
                     String name = receiveMessage.split(",")[1];//从中截取name
-                    members.add(0,new Member(name));
+                    members.add(1,new Member(name));
                     ChatController.update.setValue(ChatController.update.getValue() + 2);
                 }else if(receiveMessage.contains("offline")){
                     //下线-2
@@ -86,10 +86,15 @@ public class ClientThread extends Thread{
                     String finalName = receiveMessage.contains("allChat") ? "聊天大厅" : name;
                     for (Member member : members) {
                         if (member.getName().getText().equals(finalName)) {
-                            member.setStyle("-fx-background-color: green");
+                            //member.setStyle("-fx-background-color: green");
+                            if (!ChatController.member.equals(member)){
+                                member.getRedCircle().setVisible(true);
+                            }
                             member.getChatRecord().add(name+ "," + data);
-                            members.remove(member);
-                            members.add(0,member);
+                            if (!finalName.equals("聊天大厅")){
+                                members.remove(member);
+                                members.add(1,member);
+                            }
                             break;
                         }
                     }

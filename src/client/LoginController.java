@@ -8,6 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.Mnemonic;
 import utils.MD5Utils;
 
 import java.io.BufferedReader;
@@ -56,7 +60,7 @@ public class LoginController implements Initializable {
             /*
             初始化连接，建立输入输出流
              */
-            Socket socket = new Socket("192.168.3.4",8010);
+            Socket socket = new Socket("localhost",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             ClientMain.socket = socket;
@@ -81,7 +85,12 @@ public class LoginController implements Initializable {
                 System.out.println("登录成功！");
                 Parent root = FXMLLoader.load(getClass().getResource("chat.fxml"));
                 ClientMain.stage.setTitle("Chat");
-                ClientMain.stage.setScene(new Scene(root, 750, 550));
+                Scene scene = new Scene(root, 850, 650);
+                KeyCombination kc5 = KeyCombination.valueOf("shift+enter");
+                Mnemonic mnemonic5 = new Mnemonic(ChatController.send2, kc5);
+                scene.addMnemonic(mnemonic5);
+                ClientMain.stage.setScene(scene);
+
                 /**
                  改变
                  */

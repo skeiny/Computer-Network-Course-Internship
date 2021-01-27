@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.LoginController">
    <children>
       <Label layoutX="170.0" layoutY="31.0" prefHeight="46.0" prefWidth="309.0" text="C/S聊天程序">
          <font>
@@ -15,8 +16,8 @@
       <Label layoutX="133.0" layoutY="199.0" text="密码" />
       <TextField fx:id="userName" layoutX="199.0" layoutY="137.0" />
       <PasswordField fx:id="password" layoutX="199.0" layoutY="194.0" />
-      <Button fx:id="registered" onAction="#registered" layoutX="24.0" layoutY="356.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" text="registered" />
-      <Button fx:id="login" onAction="#login" layoutX="199.0" layoutY="271.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="202.0" text="login" />
+      <Button fx:id="registered" layoutX="24.0" layoutY="356.0" mnemonicParsing="false" onAction="#registered" prefHeight="30.0" prefWidth="89.0" text="注册" />
+      <Button fx:id="login" layoutX="199.0" layoutY="271.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="202.0" text="登录" />
 
    </children>
 </AnchorPane>

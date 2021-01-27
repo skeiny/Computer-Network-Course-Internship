@@ -4,11 +4,13 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
-import java.io.BufferedReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,8 +18,11 @@ public class ChatController implements Initializable {
     public static SimpleObjectProperty<Integer> update = new SimpleObjectProperty<>(0);
 
     public static SimpleObjectProperty<Integer> chatUpdate = new SimpleObjectProperty<>(0);
-    public static Member member = null;
+    public static Member member = ClientThread.members.get(0);
 
+    public static Button send2;
+
+    private Label chatTitle;
     @FXML
     private VBox members;
 
@@ -32,16 +37,27 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        chat.getChildren().clear();
+        chatTitle = new Label("聊天大厅");
+        chatTitle.setPadding(new Insets(5,0,5,250));
+        chatTitle.setFont(new Font(20));
+        chat.getChildren().add(chatTitle);
         update.addListener(((observable, oldValue, newValue) -> {
             Platform.runLater(()->update(oldValue,newValue));
         }));
         chatUpdate.addListener(((observable, oldValue, newValue) -> {
             Platform.runLater(()->chatUpdate());
         }));
+        send2 = send;
+        sendBox.setFont(new Font(20));
     }
 
     private void chatUpdate(){
         chat.getChildren().clear();
+        chatTitle = new Label(member.getName().getText().equals("聊天大厅")?"聊天大厅":"与"+member.getName().getText()+"的聊天");
+        chatTitle.setFont(new Font(20));
+        chatTitle.setPadding(new Insets(5,0,5,250));
+        chat.getChildren().add(chatTitle);
         for (String each:member.getChatRecord()){
             String[] nameAndMessage = each.split(",");
             chat.getChildren().add(new Message(nameAndMessage[0],nameAndMessage[1]));
@@ -102,6 +118,7 @@ public class ChatController implements Initializable {
 
     @FXML
     private void send(){
+        if (sendBox.getText().equals(""))return;
         String rName = member.getName().getText();
         if (rName.equals("聊天大厅")){
             rName = "all";
