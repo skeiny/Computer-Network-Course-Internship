@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
             /*
             初始化连接，建立输入输出流
              */
-            Socket socket = new Socket("localhost",8010);
+            Socket socket = new Socket("192.168.3.4",8010);
             PrintWriter writer = new PrintWriter(socket.getOutputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             ClientMain.socket = socket;
