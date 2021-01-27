@@ -43,16 +43,16 @@ public class ChatController implements Initializable {
         chatTitle.setFont(new Font(20));
         chat.getChildren().add(chatTitle);
         update.addListener(((observable, oldValue, newValue) -> {
-            Platform.runLater(()->update(oldValue,newValue));
+            Platform.runLater(()-> updateMember(oldValue,newValue));
         }));
         chatUpdate.addListener(((observable, oldValue, newValue) -> {
-            Platform.runLater(()->chatUpdate());
+            Platform.runLater(()-> updateChat());
         }));
         send2 = send;
         sendBox.setFont(new Font(20));
     }
 
-    private void chatUpdate(){
+    private void updateChat(){
         chat.getChildren().clear();
         chatTitle = new Label(member.getName().getText().equals("聊天大厅")?"聊天大厅":"与"+member.getName().getText()+"的聊天");
         chatTitle.setFont(new Font(20));
@@ -64,7 +64,7 @@ public class ChatController implements Initializable {
         }
     }
 
-    private void update(Integer oldValue, Integer newValue) {
+    private void updateMember(Integer oldValue, Integer newValue) {
         if (newValue == oldValue + 1) {
             System.out.println("首次获取用户信息");
             for (Member member : ClientThread.members) {
@@ -86,7 +86,7 @@ public class ChatController implements Initializable {
             }
         } else if (newValue == oldValue - 1) {
             System.out.println("我收到消息啦");
-            Platform.runLater(()->chatUpdate());
+            Platform.runLater(()-> updateChat());
             members.getChildren().clear();
             for (Member member : ClientThread.members) {
                 members.getChildren().add(member);
@@ -125,7 +125,7 @@ public class ChatController implements Initializable {
         }
         ClientThread.send2Server("chat,"+ rName + "," + sendBox.getText());
         member.getChatRecord().add(ClientThread.myName +","+sendBox.getText());
-        Platform.runLater(()->chatUpdate());
+        Platform.runLater(()-> updateChat());
         sendBox.setText("");
     }
 }
