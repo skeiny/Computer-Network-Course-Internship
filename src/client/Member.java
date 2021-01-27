@@ -19,7 +19,7 @@ public class Member extends HBox {
     private Circle redCircle = new Circle(5,Paint.valueOf("red"));
     private boolean isMiss = false;//是否有未接信息
     private String path;
-    private List<String> chatRecord = new ArrayList();
+    private List<String> chatRecord = new ArrayList();//sky,hhh zhl,hhh
 
     Member(String name) {
         this.setPrefHeight(50);
@@ -51,7 +51,7 @@ public class Member extends HBox {
             redCircle.setVisible(false);
             System.out.println("click member " + name);
             ChatController.member = this;
-            ChatController.chatUpdate.setValue(ChatController.chatUpdate.getValue()+1);
+            ChatController.updateChat.setValue(ChatController.updateChat.getValue()+1);
         });
         this.setOnMouseEntered(event -> {
             this.setStyle("-fx-background-color: #acacac");

@@ -1,7 +1,6 @@
 package client;
 
 import java.io.BufferedReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -62,12 +61,12 @@ public class ClientThread extends Thread{
                             members.add(new Member(userNames[i]));
                         }
                     }
-                    ChatController.update.setValue(ChatController.update.getValue() + 1);
+                    ChatController.updateMember.setValue(ChatController.updateMember.getValue() + 1);
                 }else if (receiveMessage.contains("newUserOnline")){
                     //用户上线功能+2
                     String name = receiveMessage.split(",")[1];//从中截取name
                     members.add(1,new Member(name));
-                    ChatController.update.setValue(ChatController.update.getValue() + 2);
+                    ChatController.updateMember.setValue(ChatController.updateMember.getValue() + 2);
                 }else if(receiveMessage.contains("offline")){
                     //下线-2
                     String name = receiveMessage.split(",")[1];//从中截取name
@@ -77,7 +76,7 @@ public class ClientThread extends Thread{
                             break;
                         }
                     }
-                    ChatController.update.setValue(ChatController.update.getValue() - 2);
+                    ChatController.updateMember.setValue(ChatController.updateMember.getValue() - 2);
                 }else if (receiveMessage.contains("chat") || receiveMessage.contains("allChat")){
                     //收到消息更新界面-1
                     String name = receiveMessage.split(",")[1];//从中截取name
@@ -98,7 +97,7 @@ public class ClientThread extends Thread{
                             break;
                         }
                     }
-                    ChatController.update.setValue(ChatController.update.getValue() - 1);
+                    ChatController.updateMember.setValue(ChatController.updateMember.getValue() - 1);
                 }
             }
         }catch (Exception e){

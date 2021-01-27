@@ -15,9 +15,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
-    public static SimpleObjectProperty<Integer> update = new SimpleObjectProperty<>(0);
 
-    public static SimpleObjectProperty<Integer> chatUpdate = new SimpleObjectProperty<>(0);
+    public static SimpleObjectProperty<Integer> updateMember = new SimpleObjectProperty<>(0);
+    public static SimpleObjectProperty<Integer> updateChat = new SimpleObjectProperty<>(0);
+
+
+
     public static Member member = ClientThread.members.get(0);
 
     public static Button send2;
@@ -42,10 +45,10 @@ public class ChatController implements Initializable {
         chatTitle.setPadding(new Insets(5,0,5,250));
         chatTitle.setFont(new Font(20));
         chat.getChildren().add(chatTitle);
-        update.addListener(((observable, oldValue, newValue) -> {
+        updateMember.addListener(((observable, oldValue, newValue) -> {
             Platform.runLater(()-> updateMember(oldValue,newValue));
         }));
-        chatUpdate.addListener(((observable, oldValue, newValue) -> {
+        updateChat.addListener(((observable, oldValue, newValue) -> {
             Platform.runLater(()-> updateChat());
         }));
         send2 = send;
@@ -58,6 +61,7 @@ public class ChatController implements Initializable {
         chatTitle.setFont(new Font(20));
         chatTitle.setPadding(new Insets(5,0,5,250));
         chat.getChildren().add(chatTitle);
+
         for (String each:member.getChatRecord()){
             String[] nameAndMessage = each.split(",");
             chat.getChildren().add(new Message(nameAndMessage[0],nameAndMessage[1]));
